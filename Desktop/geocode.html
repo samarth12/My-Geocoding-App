@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <title>My Geocode App</title>
+</head>
+<body>
+  <div class ="container">
+   <div id="formatted-address"></div>
+ </div>
+<script>
+  geocode();
+   function geocode(){
+     var location = '22 Main St Boston MA';
+     axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+       params:{
+        address:location,
+        key: 'AIzaSyC_vpTTgD1HVttNmh-LmE_5J1NGg1UR37M'
+       }
+     }).then(function(response ){
+
+       console.log(response);
+       var formattedAddress = response.data.results[0].formatted_address;
+       var formattedAddressOutput = `
+       <ul class = "list-group">
+         <li class="list-group-item ">${formattedAddress}</li>
+       </ul>
+
+       `;
+       document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
+     })
+     .catch(function(error){
+       console.log(error);
+     });
+   }
+</script>
+</body>
+</html>
